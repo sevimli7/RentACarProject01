@@ -12,15 +12,26 @@ namespace Business.Concrete
     public class BrandManager : IBrandService
     {
         IBrandDal _brandDal;
+       
 
         public BrandManager(IBrandDal brandDal)
         {
+           
             _brandDal = brandDal;
+           
         }
 
         public void Add(Brand brand)
         {
-            _brandDal.Add(brand);
+            if (brand.BrandName.Length>2)
+            {
+                _brandDal.Add(brand);
+            }
+            else
+            {
+                Console.WriteLine("brand name 2 karakterden az olamaz..");
+            }
+            
         }
 
         public void Delete(Brand brand)
