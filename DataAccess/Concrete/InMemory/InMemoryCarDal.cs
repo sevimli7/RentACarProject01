@@ -3,12 +3,13 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.InMemory
 {
-    public class InMemoryCarDal : ICarDal,IBrandDal,IColorDal
+    public class InMemoryCarDal : ICarDal
     {
         List<Car> _cars;
         List<Brand> _brands;
@@ -24,35 +25,12 @@ namespace DataAccess.Concrete.InMemory
                 new Car{CarId=5, BrandId=1, ColorId=3, ModelYear=2021, DailyPrice=400, Description="SEVEN SÜPERMARKET"},
 
             };
-            _brands = new List<Brand> {
-
-                new Brand{BrandId=1, BrandName="BMW"},
-                new Brand{BrandId=2, BrandName="MERCEDES"},
-                new Brand{BrandId=3, BrandName="PORSHE"},
-
-            };
-            _colors = new List<Color> { 
             
-                new Color{ColorId=1, ColorName="BEYAZ"},
-                new Color{ColorId=2, ColorName="SİYAH"},
-                new Color{ColorId=3, ColorName="KIRMIZI"},
-
-            };
         }
 
         public void Add(Car car)
         {
             _cars.Add(car);
-        }
-
-        public void Add(Brand brand)
-        {
-            _brands.Add(brand);
-        }
-
-        public void Add(Color color)
-        {
-            _colors.Add(color);
         }
 
         public void Delete(Car car)
@@ -61,21 +39,19 @@ namespace DataAccess.Concrete.InMemory
             _cars.Remove(carToDelete);
         }
 
-        public void Delete(Brand brand)
+        public Car Get(Expression<Func<Car, bool>> filter)
         {
-            Brand brandToDelete = _brands.SingleOrDefault(p => p.BrandId == brand.BrandId);
-            _brands.Remove(brandToDelete);
-        }
-
-        public void Delete(Color color)
-        {
-            Color colorToDelete = _colors.SingleOrDefault(p=>p.ColorId==color.ColorId);
-            _colors.Remove(colorToDelete);
+            throw new NotImplementedException();
         }
 
         public List<Car> GetAll()
         {
             return _cars;
+        }
+
+        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
+        {
+            throw new NotImplementedException();
         }
 
         public List<Car> GetById(int carId)
@@ -94,37 +70,5 @@ namespace DataAccess.Concrete.InMemory
 
         }
 
-        public void Update(Brand brand)
-        {
-            Brand brandToUpdate = _brands.SingleOrDefault(p=>p.BrandId==brand.BrandId);
-            brandToUpdate.BrandName = brand.BrandName;
-        }
-
-        public void Update(Color color)
-        {
-            Color colorToDelete = _colors.SingleOrDefault(p=>p.ColorId==color.ColorId);
-            colorToDelete.ColorName = color.ColorName;
-
-        }
-
-        List<Brand> IBrandDal.GetAll()
-        {
-            return _brands;
-        }
-
-        List<Color> IColorDal.GetAll()
-        {
-            return _colors;
-        }
-
-        List<Brand> IBrandDal.GetById(int brandId)
-        {
-            return _brands.Where(p=>p.BrandId==brandId).ToList();
-        }
-
-        List<Color> IColorDal.GetById(int colorId)
-        {
-            return _colors.Where(p=>p.ColorId==colorId).ToList();
-        }
     }
 }
