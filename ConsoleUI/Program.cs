@@ -18,13 +18,33 @@ namespace ConsoleUI
             //GetCarsByBrandIdTest();
             //GetCarsByColorIdTest();
             //AddMethodTest();
+            //BrandListTest();
+            //CarNameListTest();
+            CarManager carManager = new CarManager(new EfCarDal());
+            foreach (var car in carManager.GetCarDetails())
+            {
+                Console.WriteLine(car.CarName+" *** "+ car.BrandName+" *** "+car.ColorName);
+            }
+
+        }
+
+        private static void CarNameListTest()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+            foreach (var car in carManager.GetAll())
+            {
+                Console.WriteLine(car.CarId + " " + car.CarName + " " + car.DailyPrice);
+            }
+        }
+
+        private static void BrandListTest()
+        {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            brandManager.Add(new Brand { BrandId=6, BrandName="BMW"});
+            brandManager.Add(new Brand { BrandId = 6, BrandName = "BMW" });
             foreach (var brand in brandManager.GetAll())
             {
                 Console.WriteLine(brand.BrandName);
             }
-
         }
 
         private static void AddMethodTest()
